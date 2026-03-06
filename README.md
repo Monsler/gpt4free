@@ -1,5 +1,5 @@
 ### gpt4free Nim
-This is an implementation python library called as same as this one.
+This is an implementation of python library called as same as this one.
 Provides free access to popular LLMs (And more soon!)
 
 Install:
