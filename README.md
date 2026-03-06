@@ -1,4 +1,12 @@
 ### gpt4free Nim
+This is an implementation python library called as same as this one.
+Provides free access to popular LLMs (And more soon!)
+
+Install:
+```
+nimble add gpt4free
+```
+
 Example:
 
 ```nim
@@ -27,3 +35,4 @@ when isMainModule:
     
     quit(0);
 ```
+
