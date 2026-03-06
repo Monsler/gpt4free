@@ -1,0 +1,13 @@
+# Package
+
+version       = "0.1.0"
+author        = "Monsler"
+description   = "gpt4free work-in-progress nim implementation"
+license       = "MIT"
+srcDir        = "src"
+bin           = @["gpt4free"]
+
+
+# Dependencies
+
+requires "nim >= 2.2.8"
