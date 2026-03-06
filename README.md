@@ -30,8 +30,8 @@ when isMainModule:
             echo t["choices"][0]["message"]["content"].getStr()
         except:
             echo "Failed: ", $t
-        else:
-            echo "response is nil"
+    else:
+        echo "response is nil"
     
     quit(0);
 ```
