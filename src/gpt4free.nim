@@ -2,7 +2,7 @@ import tables, options
 import json, asyncdispatch
 import httpclient
 import types
-export types
+export types, tables, json, asyncdispatch, options
 
 import providers/[pollination, geminiv1, master, auto]
 

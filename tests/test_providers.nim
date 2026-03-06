@@ -1,8 +1,5 @@
 import unittest
 import ../src/gpt4free
-import asyncdispatch
-import options
-import json
 
 suite "Provider test":
     test "Provider call":
