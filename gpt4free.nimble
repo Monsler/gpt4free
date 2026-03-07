@@ -1,6 +1,6 @@
 # Package
 
-version       = "0.1.7"
+version       = "0.2.1"
 author        = "Monsler"
 description   = "gpt4free work-in-progress nim implementation"
 license       = "MIT"
