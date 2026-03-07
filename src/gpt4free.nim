@@ -6,22 +6,20 @@ export types, tables, json, asyncdispatch, options
 
 import providers/[pollination, geminiv1, master, auto]
 
-var providerResolver = initTable[Provider, ProviderConfig]()
+var providerResolver {.threadvar.} = initTable[Provider, ProviderConfig]()
 
 providerResolver.registerPollinations
 providerResolver.registerGeminiV1
 providerResolver.registerMaster
 providerResolver.registerAuto
 
-proc resolveProvider(provider: Provider): Option[ProviderConfig] =
+proc resolveProvider(provider: Provider): Option[ProviderConfig] {.gcsafe.} =
   if providerResolver.contains(provider):
     some(providerResolver[provider])
   else:
     none(ProviderConfig)
 
-import asyncdispatch, httpclient, json, options # Добавь это
-
-proc createCompletion*(chat_completion: ChatCompletion): Future[Option[JsonNode]] {.async.} =
+proc createCompletion*(chat_completion: ChatCompletion): Future[Option[JsonNode]] {.async, gcsafe.} =
   let configOpt = resolveProvider(chat_completion.provider)
   
   if configOpt.isNone:
