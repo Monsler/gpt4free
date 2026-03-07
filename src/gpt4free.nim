@@ -8,11 +8,6 @@ import providers/[pollination, geminiv1, master, auto]
 
 var providerResolver {.threadvar.} = initTable[Provider, ProviderConfig]()
 
-providerResolver.registerPollinations
-providerResolver.registerGeminiV1
-providerResolver.registerMaster
-providerResolver.registerAuto
-
 proc resolveProvider(provider: Provider): Option[ProviderConfig] {.gcsafe.} =
   if providerResolver.contains(provider):
     some(providerResolver[provider])
@@ -20,6 +15,12 @@ proc resolveProvider(provider: Provider): Option[ProviderConfig] {.gcsafe.} =
     none(ProviderConfig)
 
 proc createCompletion*(chat_completion: ChatCompletion): Future[Option[JsonNode]] {.async, gcsafe.} =
+  if providerResolver.len == 0:
+    providerResolver.registerPollinations
+    providerResolver.registerGeminiV1
+    providerResolver.registerMaster
+    providerResolver.registerAuto
+
   let configOpt = resolveProvider(chat_completion.provider)
   
   if configOpt.isNone:
