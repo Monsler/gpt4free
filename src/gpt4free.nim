@@ -6,7 +6,7 @@ export types, tables, json, asyncdispatch, options
 
 import providers/[pollination, geminiv1, master, auto]
 
-var providerResolver {.threadvar.} = initTable[Provider, ProviderConfig]()
+var providerResolver {.threadvar.}: Table[Provider, ProviderConfig]
 
 proc resolveProvider(provider: Provider): Option[ProviderConfig] {.gcsafe.} =
   if providerResolver.contains(provider):
