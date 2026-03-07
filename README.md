@@ -13,26 +13,24 @@ Example:
 import gpt4free
 
 when isMainModule:
-    let chat = ChatCompletion(
-            provider: Provider.Auto,
-            model: "auto",
-            messages: @[
-                Message(role: "system", content: "You're an intelligent AI Bot that types anything in uppercase"), 
-                Message(role: "user", content: "Hi, can you tell me in a single sentence what is productivity?")]
-    )
+    let bot = newChatCompletion("openrouter/free", Provider.OpenRouter, @[
+                newMessage("system", "you are a helpful ai chat bot."),
+                newMessage("user", "hello, can you tell me a funny story?")
+            ], true)
 
-    let response = waitFor createCompletion(chat)
+    let response = waitFor bot.createCompletion()
 
     if response.isSome():
         let t = response.get()
                 
         try:
-            echo t["choices"][0]["message"]["content"].getStr()
+            echo "Model answer: \n\n", t.message.content, "\n\nReasoning:\n\n", t.reasoning
         except:
-            echo "Failed: ", $t
-    else:
-        echo "response is nil"
+            echo "Failed: ", $t.raw
+        else:
+            echo "response is nil"
     
-    quit(0);
+    quit(0)
+    
 ```
 
