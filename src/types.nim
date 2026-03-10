@@ -10,6 +10,8 @@ type
     Ollama
     Puter
     Auto
+    AirForce
+    LMArena
 
 type
   ProviderConfig* = object

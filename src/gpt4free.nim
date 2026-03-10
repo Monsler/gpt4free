@@ -4,7 +4,7 @@ import httpclient, strutils
 import types
 export types, tables, json, asyncdispatch, options
 
-import providers/[pollination, geminiv1, master, auto, openrouter, ollama, puter]
+import providers/[pollination, geminiv1, master, auto, openrouter, ollama, puter, lmarena, airforce]
 
 var providerResolver {.threadvar.}: Table[Provider, ProviderConfig]
 
@@ -16,13 +16,15 @@ proc resolveProvider(provider: Provider): Option[ProviderConfig] {.gcsafe.} =
 
 proc createCompletion*(chat_completion: ChatCompletion): Future[Option[ChatResponse]] {.async, gcsafe.} =
   if providerResolver.len == 0:
-    providerResolver.registerPollinations
-    providerResolver.registerGeminiV1
-    providerResolver.registerMaster
-    providerResolver.registerAuto
-    providerResolver.registerOpenRouter
-    providerResolver.registerOllama
-    providerResolver.registerPuter
+    providerResolver.registerPollinations()
+    providerResolver.registerGeminiV1()
+    providerResolver.registerMaster()
+    providerResolver.registerAuto()
+    providerResolver.registerOpenRouter()
+    providerResolver.registerOllama()
+    providerResolver.registerPuter()
+    providerResolver.registerLMArena()
+    providerResolver.registerAirForce()
 
   let configOpt = resolveProvider(chat_completion.provider)
   
@@ -34,7 +36,7 @@ proc createCompletion*(chat_completion: ChatCompletion): Future[Option[ChatRespo
 
   if not chat_completion.apiKey.isEmptyOrWhitespace():
     config.headers["Authorization"] = "Bearer " & chat_completion.apiKey
-
+    
   let client = newAsyncHttpClient()
   client.headers = config.headers
 
