@@ -24,7 +24,7 @@ when isMainModule:
         let t = response.get()
                 
         try:
-            echo "Model answer: \n\n", t.message.content, "\n\nReasoning:\n\n", t.reasoning
+            echo "Model answer: \n\n", t.content, "\n\nReasoning:\n\n", t.reasoning
         except:
             echo "Failed: ", $t.raw
         else:
