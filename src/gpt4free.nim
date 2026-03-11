@@ -39,6 +39,7 @@ proc createCompletion*(chat_completion: ChatCompletion): Future[Option[ChatRespo
     
   let client = newAsyncHttpClient()
   client.headers = config.headers
+  client.timeout = 30
 
   var body = %* {
     "model": chat_completion.model,

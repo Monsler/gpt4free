@@ -74,6 +74,16 @@ proc webImage*(imageUrl: string): string =
 
   return &"data:image/jpeg;base64,{encoded}"
 
+proc asyncWebImage*(imageUrl: string): Future[string] {.async.} =
+  let client = newAsyncHttpClient()
+  let response = await client.request(imageUrl, HttpMethod.HttpGet, "")
+
+  let content = await response.body
+
+  let encoded = base64.encode(content)
+
+  return &"data:image/jpeg;base64,{encoded}"
+
 proc newImageMessage*(role: string = "user", content: string = "", imageUrl: string = ""): Message =
   return Message(
     role: role,
