@@ -36,7 +36,8 @@ type
 type
   ChatResponse* = object
     raw*: JsonNode
-    message*: Message
+    content*: string
+    role*: string
     reasoning*: string
 
 proc newChatCompletion*(model: string="auto", provider: Provider=Provider.Auto, messages: seq[Message] = @[], webSearch: bool = false, apiKey: string = ""): ChatCompletion =
@@ -90,10 +91,11 @@ proc newImageMessage*(role: string = "user", content: string = "", imageUrl: str
     ]
   )
 
-proc newChatResponse*(message: Message, rawData: JsonNode, reasoning: string = ""): ChatResponse =
+proc newChatResponse*(role: string, message: string, rawData: JsonNode, reasoning: string = ""): ChatResponse =
   return ChatResponse(
-    message: message,
+    content: message,
     raw: rawData,
+    role: role,
     reasoning: reasoning
   )
 

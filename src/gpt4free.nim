@@ -55,18 +55,14 @@ proc createCompletion*(chat_completion: ChatCompletion): Future[Option[ChatRespo
     try:
       let raw = parseJson(content)
       try:
-        let message = newMessage(
-          raw["choices"][0]["message"]["role"].getStr(),
-          raw["choices"][0]["message"]["content"].getStr()
-        )
-
         var reasoning = ""
 
         if raw["choices"][0]["message"].hasKey("reasoning"):
           reasoning = raw["choices"][0]["message"]["reasoning"].getStr()
 
         let output = newChatResponse(
-          message,
+          raw["choices"][0]["message"]["role"].getStr(),
+          raw["choices"][0]["message"]["content"].getStr()  ,
           raw,
           reasoning
         )
